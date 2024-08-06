@@ -104,6 +104,19 @@
   ];
   // let selected = carsForHire.[0];
   let selected = "";
+
+  // go to the getWalls function and it will send you back the array.
+  let GettingCars = getCars();
+
+  async function getCars() {
+    // hop off to the website to get the array
+    let shopData = await fetch(
+      "https://digitech.craighead.school.nz/api/car-hire",
+    );
+
+    // send the array to where this function was called from.
+    return shopData.json();
+  }
 </script>
 
 <Header />
@@ -114,6 +127,32 @@
     <option value={cars}> {cars.name} </option>
   {/each}
 </select>
+
+<!-- While you're still waiting for the data from the other website, show a waiting message -->
+{#await GettingCars}
+  ...waiting
+
+  <!-- once you get the data, do this stuff -->
+{:then GettingCars}
+  {#each GettingCars.GettingCars as wall}
+    <!-- create a card for each item in the array (we called it 'wall') and send the info to the card component -->
+
+    name={wall.car}
+    alt={wall.car}
+    src={wall.img}
+    caption={wall.description}
+    money={wall.price}
+  {/each}
+{/await}
+<!-- {
+  car: "Black Lamborghini",
+  description:
+    "A sleek, high-performance sports car in a striking black finish.",
+  price: 2000,
+  img: "https://digitech.craighead.school.nz/car-hire-images/black-lamborghini.jpg",
+  credit: "Adrian N (Unsplash)",
+  available: false,
+}, -->
 
 <!-- this code below works!!!!!!! -->
 <!-- <select bind:value={selected}>
