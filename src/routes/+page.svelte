@@ -1,14 +1,125 @@
 <script>
-  import Header from '$lib/Header.svelte'
+  import Header from "$lib/Header.svelte";
+  let carsForHire = {
+    name: "fast",
+    cars: [
+      {
+        car: "Black Lamborghini",
+        description:
+          "A sleek, high-performance sports car in a striking black finish.",
+        price: 2000,
+        img: "https://digitech.craighead.school.nz/car-hire-images/black-lamborghini.jpg",
+        credit: "Adrian N (Unsplash)",
+        available: false,
+      },
+      {
+        car: "Orange Lamborghini",
+        description:
+          "An eye-catching orange Lamborghini with top-tier speed and luxury.",
+        price: 2000,
+        img: "https://digitech.craighead.school.nz/car-hire-images/orange-lamborghini.jpg",
+        credit: "Toni Zaat (Unsplash)",
+        available: true,
+      },
+      {
+        car: "Grey Aston Martin",
+        description:
+          "A sophisticated grey Aston Martin combining elegance with power.",
+        price: 1500,
+        img: "https://digitech.craighead.school.nz/car-hire-images/grey-aston-martin.jpg",
+        credit: "Alexandru Ivanov (Unsplash)",
+        available: true,
+      },
+      {
+        car: "White Bugatti",
+        description:
+          "A luxurious white Bugatti known for its exceptional speed and design.",
+        price: 3500,
+        img: "https://digitech.craighead.school.nz/car-hire-images/white-bugatti.jpg",
+        credit: "Flavien (username) (Unsplash)",
+        available: true,
+      },
+      {
+        car: "Red Ferrari",
+        description:
+          "A stunning red Ferrari that promises an exhilarating driving experience.",
+        price: 1500,
+        img: "https://digitech.craighead.school.nz/car-hire-images/red-ferrari.jpg",
+        credit: "Molim Karbelaei (Unsplash)",
+        available: true,
+      },
+    ],
+    name: "nice",
+    cars: [
+      {
+        car: "Black Maserati",
+        description:
+          "A stylish black Maserati offering luxury and high performance.",
+        price: 1500,
+        img: "https://digitech.craighead.school.nz/car-hire-images/black-maserati.jpg",
+        credit: "Krysztof Kubicki (Unsplash)",
+        available: true,
+      },
+      {
+        car: "Black Mercedes",
+        description:
+          "A classy black Mercedes known for its comfort and advanced features.",
+        price: 1500,
+        img: "https://digitech.craighead.school.nz/car-hire-images/black-mercedes.jpg",
+        credit: "Martin Katler (Unsplash)",
+        available: false,
+      },
+      {
+        car: "Green Chevrolet",
+        description:
+          "A vibrant green Chevrolet that blends style with reliable performance.",
+        price: 1000,
+        img: "https://digitech.craighead.school.nz/car-hire-images/green-chevrolet.jpg",
+        credit: "Markus Spiske (Unsplash)",
+        available: true,
+      },
+      {
+        car: "Orange Volks Wagon",
+        description:
+          "A charming orange Volkswagen with a retro appeal and modern features.",
+        price: 500,
+        img: "https://digitech.craighead.school.nz/car-hire-images/orange-volks-wagon.jpg",
+        credit: "Oli Woodman (Unsplash)",
+        available: true,
+      },
+      {
+        car: "Black MG",
+        description:
+          "A classic black MG known for its elegant design and smooth ride.",
+        price: 1000,
+        img: "https://digitech.craighead.school.nz/car-hire-images/black-mg.jpg",
+        credit: "Robin Vet (Unsplash)",
+        available: true,
+      },
+    ],
+  };
+  let selectedList = "";
 </script>
 
 <Header />
 
-<main>
-  <h2>SvelteKit</h2>
+{selectedList}
+<select bind:value={selectedList}>
+  {#each carsForHire as cars}
+    <option value={cars}>
+      {selectedList.name}
+    </option>
+  {/each}
+</select>
 
-  <p>Welcome to coding with SvelteKit, a modern JavaScript framework that makes it easy to code great apps.</p>
-</main>
+<select bind:value={selectedList}>
+  <option value="nice">nice</option>
+  <option value="fast">fast</option>
+</select>
+
+<!-- {#each selectedList.cars as item, index}
+  <input bind:value={item} />
+{/each} -->
 
 <footer>
   <p>&copy; Craighead Diocesan School 2024</p>
