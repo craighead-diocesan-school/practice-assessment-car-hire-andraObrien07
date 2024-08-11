@@ -14,56 +14,77 @@
     // send the array to where this function was called from.
     return shopData.json();
   }
+  let cart = [];
+  function addCarToCart(carsForHire) {
+    cart = [...cart, carsForHire];
+    calcTotalCost();
+  }
+
+  let totalCost = 0;
+  function calcTotalCost() {
+    totalCost = 0;
+    for (let carsForHire of cart) {
+      totalCost = totalCost + carsForHire.price;
+    }
+  }
 </script>
 
 <Header />
+<div class="columns">
+  <div class="column">
+    <!-- While you're still waiting for the data from the other website, show a waiting message -->
+    {#await carsForHire}
+      ...waiting
 
-<!-- {selected}  -->
-<!-- <select bind:value={selected}>
-  {#each carsForHire as cars}
-    <option value={cars}> {cars.name} </option>
-  {/each}
-</select> -->
-
-<!-- While you're still waiting for the data from the other website, show a waiting message -->
-{#await carsForHire}
-  ...waiting
-
-  <!-- once you get the data, do this stuff -->
-{:then carsForHire}
-  {#each carsForHire.fast as carsForHire}
-    <!-- create a card for each item in the array (we called it 'wall') and send the info to the card component -->
-
-    {carsForHire.car}
-    {carsForHire.description}
-    {carsForHire.price}
-    <img src={carsForHire.img} alt={carsForHire.car} />
-    {carsForHire.credit}
-    {carsForHire.available}
-  {/each}
-  {#each carsForHire.nice as carsForHire}
-    <!-- create a card for each item in the array (we called it 'wall') and send the info to the card component -->
-
-    {carsForHire.car}
-    {carsForHire.description}
-    {carsForHire.price}
-    <img src={carsForHire.img} alt={carsForHire.car} />
-    {carsForHire.credit}
-    {carsForHire.available}
-  {/each}
-{/await}
-
-<!-- this code below works!!!!!!! -->
-<!-- <select bind:value={selected}>
-  <option value="nice">nice</option>
-  <option value="fast">fast</option>
-</select> -->
-
-<!-- {#each selected.cars as item, index}
- 
-  <input bind:value={item} />
-{/each} -->
-
+      <!-- once you get the data, do this stuff -->
+    {:then carsForHire}
+      {#each carsForHire.fast as carsForHire}
+        {#if carsForHire.available}
+          {carsForHire.car}
+          {carsForHire.description}
+          {carsForHire.price}
+          <img src={carsForHire.img} alt={carsForHire.car} />
+          {carsForHire.credit}
+          {#if cart.length < 3}
+            <button
+              on:click={() => {
+                addCarToCart(carsForHire);
+              }}>+</button
+            >
+          {/if}
+        {/if}
+      {/each}
+      {#each carsForHire.nice as carsForHire}
+        {#if carsForHire.available}
+          {carsForHire.car}
+          {carsForHire.description}
+          {carsForHire.price}
+          <img src={carsForHire.img} alt={carsForHire.car} />
+          {carsForHire.credit}
+          {#if cart.length < 3}
+            <button
+              on:click={() => {
+                addCarToCart(carsForHire);
+              }}>+</button
+            >
+          {/if}
+        {/if}
+      {/each}
+    {/await}
+  </div>
+  <h2>Total Cost of Cart=$</h2>
+  {totalCost}
+  <div class="column">
+    {#each cart as carsForHire}
+      {carsForHire.car}
+      {carsForHire.description}
+      {carsForHire.price}
+      <img src={carsForHire.img} alt={carsForHire.car} />
+      {carsForHire.credit}
+      {carsForHire.available}
+    {/each}
+  </div>
+</div>
 <footer>
-  <p>&copy; Craighead Diocesan School 2024</p>
+  <p>&copy; AndraComan @ Craighead Diocesan School 2024</p>
 </footer>
