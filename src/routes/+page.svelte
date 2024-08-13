@@ -67,14 +67,29 @@
                 addCarToCart(carsForHire);
               }}>+</button
             >
+            <!-- {#elseif cart.length == 3}
+              <p>Cart is Full</p>
+            {/if} -->
+            <!-- :else {cart.length == 2}
+            <p>Cart is Full</p> -->
+            <!-- {cart.length} -->
           {/if}
         {/if}
       {/each}
     {/await}
   </div>
-  <h2>Total Cost of Cart=$</h2>
-  {totalCost}
   <div class="column">
+    <h2>Total Cost of Cart =$ {totalCost}</h2>
+    <p>There is {cart.length} items in Cart</p>
+    {#if cart.length == 0}
+      <p>Cart is Empty</p>
+    {/if}
+    <!-- {#elseif cart.length > 0 && < 3} -->
+
+    {#if cart.length == 3}
+      <p>Cart is Full</p>
+      <p>Checkout cars or remove some from cart</p>
+    {/if}
     {#each cart as carsForHire}
       {carsForHire.car}
       {carsForHire.description}
@@ -85,6 +100,15 @@
     {/each}
   </div>
 </div>
+
 <footer>
   <p>&copy; AndraComan @ Craighead Diocesan School 2024</p>
 </footer>
+
+<style>
+  .column {
+    width: 400px; /* Fixed width of 1000px */
+    max-width: 100%; /* Ensures the container doesn't overflow */
+    margin: 10px auto; /* Centers the container */
+  }
+</style>
