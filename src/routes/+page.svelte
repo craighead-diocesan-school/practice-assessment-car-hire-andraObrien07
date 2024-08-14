@@ -14,13 +14,23 @@
     // send the array to where this function was called from.
     return shopData.json();
   }
+
+  //opens a cart array
   let cart = [];
+  //calling car and adding it to cart
   function addCarToCart(carsForHire) {
     cart = [...cart, carsForHire];
+    //triggering the calculate total cost of cart
     calcTotalCost();
   }
 
+  //getting rid of magic numbers
+  let maxNumbOfCarsInCart = 3;
+
+  //getting rid of majic numbers
   let totalCost = 0;
+
+  // calculating the total cost of cart
   function calcTotalCost() {
     totalCost = 0;
     for (let carsForHire of cart) {
@@ -38,20 +48,22 @@
 
       <!-- once you get the data, do this stuff -->
     {:then carsForHire}
+      <!-- two diff loops to go through the two diff arrays. fast and nice -->
       {#each carsForHire.fast as carsForHire}
+        <!-- if the car is available, display its information -->
         {#if carsForHire.available}
           {carsForHire.car}
           {carsForHire.description}
           {carsForHire.price}
           <img src={carsForHire.img} alt={carsForHire.car} />
           {carsForHire.credit}
-          {#if cart.length < 3}
-            <button
-              on:click={() => {
-                addCarToCart(carsForHire);
-              }}>+</button
-            >
-          {/if}
+          <!-- if the car length is equal to maxNumbOfCarsInCart disable button, if not have the button to be clicked -->
+          <button
+            disabled={cart.length == maxNumbOfCarsInCart}
+            on:click={() => {
+              addCarToCart(carsForHire);
+            }}>+</button
+          >
         {/if}
       {/each}
       {#each carsForHire.nice as carsForHire}
@@ -61,35 +73,31 @@
           {carsForHire.price}
           <img src={carsForHire.img} alt={carsForHire.car} />
           {carsForHire.credit}
-          {#if cart.length < 3}
-            <button
-              on:click={() => {
-                addCarToCart(carsForHire);
-              }}>+</button
-            >
-            <!-- {#elseif cart.length == 3}
-              <p>Cart is Full</p>
-            {/if} -->
-            <!-- :else {cart.length == 2}
-            <p>Cart is Full</p> -->
-            <!-- {cart.length} -->
-          {/if}
+
+          <button
+            disabled={cart.length == maxNumbOfCarsInCart}
+            on:click={() => {
+              addCarToCart(carsForHire);
+            }}>+</button
+          >
         {/if}
       {/each}
     {/await}
   </div>
   <div class="column">
     <h2>Total Cost of Cart =$ {totalCost}</h2>
-    <p>There is {cart.length} items in Cart</p>
     {#if cart.length == 0}
       <p>Cart is Empty</p>
+    {:else if cart.length == maxNumbOfCarsInCart}
+      <p>Cart is Full</p>
+    {:else}
+      <p>There is {cart.length} items in Cart</p>
     {/if}
-    <!-- {#elseif cart.length > 0 && < 3} -->
 
-    {#if cart.length == 3}
+    <!-- {#if cart.length == maxNumbOfCarsInCart}
       <p>Cart is Full</p>
       <p>Checkout cars or remove some from cart</p>
-    {/if}
+    {/if} -->
     {#each cart as carsForHire}
       {carsForHire.car}
       {carsForHire.description}
